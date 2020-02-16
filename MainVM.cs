@@ -17,13 +17,19 @@ namespace DynamicTextBoxPoC
         private ObservableCollection<string> m_entries;
         private string m_newEntry;
 
+
+        public void TextChanged(object sender, EventArgs e)
+        {
+            int a = 0;
+        }
+
         public MainVM()
         {
             TextBoxesCollection = new ObservableCollection<TextBox>();
             Entries = new ObservableCollection<string>();
         }
 
-        public ObservableCollection <TextBox> TextBoxesCollection
+        public ObservableCollection<TextBox> TextBoxesCollection
         {
             get
             {
@@ -93,9 +99,19 @@ namespace DynamicTextBoxPoC
 
         private void AddItem(object obj)
         {
-            TextBoxesCollection.Add(new TextBox());
-            var list = TextBoxesCollection;
-            Entries.Add(NewEntry);
+            if (TextBoxesCollection.Count != 0)
+            {
+                var tempTextBox = TextBoxesCollection.Last();
+                tempTextBox.IsEnabled = false;
+                Entries.Add(tempTextBox.Text);
+            }
+
+            var textBox = new TextBox();
+            textBox.Focus();
+            
+            //textBox.TextChanged += TextChanged;
+            //textBox.LostKeyboardFocus += new System.Windows.Input.KeyboardFocusChangedEventHandler(TextChanged);
+            TextBoxesCollection.Add(textBox);
         }
     }
 }

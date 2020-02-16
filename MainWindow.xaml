@@ -10,12 +10,11 @@
         <local:MainVM x:Key="MainVMDatacontext"/>
 
         <DataTemplate x:Key="Template">
-            <Grid MinHeight="30">
-                <TextBox MinWidth="150"
-                         Text="{Binding NewEntry, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            </Grid>
+            <TextBox MinWidth="150" 
+                         Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=NewEntry,
+                    UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </DataTemplate>
-        
+
     </Window.Resources>
     <Grid DataContext="{StaticResource MainVMDatacontext}">
         <Grid.ColumnDefinitions>
