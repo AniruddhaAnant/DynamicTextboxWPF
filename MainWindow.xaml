@@ -11,8 +11,7 @@
 
         <DataTemplate x:Key="Template">
             <TextBox MinWidth="150" 
-                         Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=NewEntry,
-                    UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </DataTemplate>
 
     </Window.Resources>

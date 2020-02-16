@@ -11,25 +11,24 @@ namespace DynamicTextBoxPoC
 {
     public class MainVM : ViewModelBase
     {
-        private ObservableCollection<TextBox> m_textBoxesCollection;
+        private ObservableCollection<TextBoxText> m_textBoxesCollection;
         private Command m_addEntry;
         private TextBox m_newTextBox;
         private ObservableCollection<string> m_entries;
         private string m_newEntry;
 
-
-        public void TextChanged(object sender, EventArgs e)
+        public class TextBoxText
         {
-            int a = 0;
+            public string Text { get; set; }
         }
-
+       
         public MainVM()
         {
-            TextBoxesCollection = new ObservableCollection<TextBox>();
+            TextBoxesCollection = new ObservableCollection<TextBoxText>();
             Entries = new ObservableCollection<string>();
         }
 
-        public ObservableCollection<TextBox> TextBoxesCollection
+        public ObservableCollection<TextBoxText> TextBoxesCollection
         {
             get
             {
@@ -55,31 +54,6 @@ namespace DynamicTextBoxPoC
             }
         }
 
-        public TextBox NewTextBox
-        {
-            get
-            {
-                return m_newTextBox;
-            }
-            set
-            {
-                m_newTextBox = value;
-                RaiseEvent("NewTextBox");
-            }
-        }
-
-        public string NewEntry
-        {
-            get
-            {
-                return m_newEntry;
-            }
-            set
-            {
-                m_newEntry = value;
-                RaiseEvent("NewEntry");
-            }
-        }
         public Command AddEntry
         {
             get
@@ -99,19 +73,13 @@ namespace DynamicTextBoxPoC
 
         private void AddItem(object obj)
         {
-            if (TextBoxesCollection.Count != 0)
+            Entries.Clear(); 
+            foreach(var tb in TextBoxesCollection)
             {
-                var tempTextBox = TextBoxesCollection.Last();
-                tempTextBox.IsEnabled = false;
-                Entries.Add(tempTextBox.Text);
+                Entries.Add(tb.Text);
             }
+            TextBoxesCollection.Add(new TextBoxText());
 
-            var textBox = new TextBox();
-            textBox.Focus();
-            
-            //textBox.TextChanged += TextChanged;
-            //textBox.LostKeyboardFocus += new System.Windows.Input.KeyboardFocusChangedEventHandler(TextChanged);
-            TextBoxesCollection.Add(textBox);
         }
     }
 }
